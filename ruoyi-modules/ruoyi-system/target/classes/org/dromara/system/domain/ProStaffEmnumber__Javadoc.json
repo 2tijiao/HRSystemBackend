@@ -1,0 +1,1 @@
+{"doc":"","fields":[{"name":"proStaffEmnumberId","doc":" 号码表id\n"},{"name":"idCardNumber","doc":" 员工身份证号\n"},{"name":"employeeNumber","doc":" 员工四位号码\n"}],"enumConstants":[],"methods":[],"constructors":[]}
