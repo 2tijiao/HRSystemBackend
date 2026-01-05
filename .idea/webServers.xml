@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="4a934ccc-927b-4c41-b07a-93a5bd5308d5" name="HRSystem">
+        <fileTransfer accessType="SFTP" host="10.0.182.39" port="22" sshConfigId="3606a14a-fa8b-4a85-b9d6-13d43edf2587" sshConfig="root@10.0.182.39:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

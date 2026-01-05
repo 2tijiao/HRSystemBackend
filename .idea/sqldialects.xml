@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/script/sql/postgres/postgres_ry_job.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/script/sql/postgres/postgres_ry_vue_5.X.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/script/sql/postgres/postgres_ry_workflow.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/script/sql/ry_vue_5.X.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/script/sql/sqlserver/sqlserver_ry_vue_5.X.sql" dialect="PostgreSQL" />
+  </component>
+</project>

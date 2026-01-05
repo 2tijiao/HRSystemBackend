@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="0@localhost">
+  <database-model serializer="dbm" dbms="REDIS" family-id="REDIS" format-version="4.53">
+    <root id="1">
+      <ServerVersion>8.2.2</ServerVersion>
+    </root>
+    <schema id="2" parent="1" name="0">
+      <Current>1</Current>
+    </schema>
+    <schema id="3" parent="1" name="1"/>
+    <schema id="4" parent="1" name="10"/>
+    <schema id="5" parent="1" name="11"/>
+    <schema id="6" parent="1" name="12"/>
+    <schema id="7" parent="1" name="13"/>
+    <schema id="8" parent="1" name="14"/>
+    <schema id="9" parent="1" name="15"/>
+    <schema id="10" parent="1" name="2"/>
+    <schema id="11" parent="1" name="3"/>
+    <schema id="12" parent="1" name="4"/>
+    <schema id="13" parent="1" name="5"/>
+    <schema id="14" parent="1" name="6"/>
+    <schema id="15" parent="1" name="7"/>
+    <schema id="16" parent="1" name="8"/>
+    <schema id="17" parent="1" name="9"/>
+    <hash-table id="18" parent="2" name="000000:sys_dept"/>
+    <hash-table id="19" parent="2" name="global:rate_limit:/auth/code:0:0:0:0:0:0:0:1:"/>
+    <hash-table id="20" parent="2" name="global:sys_client"/>
+    <hash-table id="21" parent="2" name="global:sys_oss_config"/>
+    <hash-table id="22" parent="2" name="{000000:sys_dept}:redisson_options"/>
+    <hash-table id="23" parent="2" name="{global:sys_client}:redisson_options"/>
+    <sorted-set id="24" parent="2" name="redisson__timeout__set:{000000:sys_dept}"/>
+    <sorted-set id="25" parent="2" name="redisson__timeout__set:{global:sys_client}"/>
+    <sorted-set id="26" parent="2" name="{global:rate_limit:/auth/code:0:0:0:0:0:0:0:1:}:permits"/>
+    <string id="27" parent="2" name="000000:employee:number"/>
+    <string id="28" parent="2" name="000000:online_tokens:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiJzeXNfdXNlcjoxOTkwMjQxODAzMDQ3Mzk1MzMwIiwicm5TdHIiOiIxMmNzTUExTjFkNXVGY3lxOElsUHN0NEhwbkNXUVlUZCIsImNsaWVudGlkIjoiZTVjZDdlNDg5MWJmOTVkMWQxOTIwNmNlMjRhN2IzMmUiLCJ0ZW5hbnRJZCI6IjAwMDAwMCIsInVzZXJJZCI6MTk5MDI0MTgwMzA0NzM5NTMzMCwidXNlck5hbWUiOiJtankiLCJkZXB0SWQiOjEwMSwiZGVwdE5hbWUiOiLmt7HlnLPmgLvlhazlj7giLCJkZXB0Q2F0ZWdvcnkiOiIifQ.Ov7YH5GuiN17XQiCMnT65l9MXXFt-qGqisz-P5Fg98o"/>
+    <string id="29" parent="2" name="000000:online_tokens:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiJzeXNfdXNlcjoxOTkwMjQxODAzMDQ3Mzk1MzMwIiwicm5TdHIiOiJFWmVVbjJrbE9ibndVYXpzOERWZGtFTXYwTzIyem1OaSIsImNsaWVudGlkIjoiZTVjZDdlNDg5MWJmOTVkMWQxOTIwNmNlMjRhN2IzMmUiLCJ0ZW5hbnRJZCI6IjAwMDAwMCIsInVzZXJJZCI6MTk5MDI0MTgwMzA0NzM5NTMzMCwidXNlck5hbWUiOiJtankiLCJkZXB0SWQiOjEwMSwiZGVwdE5hbWUiOiLmt7HlnLPmgLvlhazlj7giLCJkZXB0Q2F0ZWdvcnkiOiIifQ.stBKCs3Q5PsGa7b8WLT78KiG09mCIAlExXpjqr2dY64"/>
+    <string id="30" parent="2" name="000000:online_tokens:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiJzeXNfdXNlcjoxOTkwMjQxODAzMDQ3Mzk1MzMwIiwicm5TdHIiOiJWOUNhbUsyMzBrcWZzZEFDa1F2c0pPanFQVjJXUzNGeSIsImNsaWVudGlkIjoiZTVjZDdlNDg5MWJmOTVkMWQxOTIwNmNlMjRhN2IzMmUiLCJ0ZW5hbnRJZCI6IjAwMDAwMCIsInVzZXJJZCI6MTk5MDI0MTgwMzA0NzM5NTMzMCwidXNlck5hbWUiOiJtankiLCJkZXB0SWQiOjEwMSwiZGVwdE5hbWUiOiLmt7HlnLPmgLvlhazlj7giLCJkZXB0Q2F0ZWdvcnkiOiIifQ.HTcWjaDe2p_6oE7dycJ2Jvhcbrx_0kGcedt201RCsI4"/>
+    <string id="31" parent="2" name="000000:online_tokens:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiJzeXNfdXNlcjoxOTkwMjQxODAzMDQ3Mzk1MzMwIiwicm5TdHIiOiJkV09XVEVRd1ZDdnFjcEpweEd3a1h3cms4QzRaVWE2aiIsImNsaWVudGlkIjoiZTVjZDdlNDg5MWJmOTVkMWQxOTIwNmNlMjRhN2IzMmUiLCJ0ZW5hbnRJZCI6IjAwMDAwMCIsInVzZXJJZCI6MTk5MDI0MTgwMzA0NzM5NTMzMCwidXNlck5hbWUiOiJtankiLCJkZXB0SWQiOjEwMSwiZGVwdE5hbWUiOiLmt7HlnLPmgLvlhazlj7giLCJkZXB0Q2F0ZWdvcnkiOiIifQ.oM8wDb8hjH77XyyCPBq2kPmMuhfzwmP9Usu7tdyhNg4"/>
+    <string id="32" parent="2" name="global:Authorization:login:last-active:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiJzeXNfdXNlcjoxOTkwMjQxODAzMDQ3Mzk1MzMwIiwicm5TdHIiOiIxMmNzTUExTjFkNXVGY3lxOElsUHN0NEhwbkNXUVlUZCIsImNsaWVudGlkIjoiZTVjZDdlNDg5MWJmOTVkMWQxOTIwNmNlMjRhN2IzMmUiLCJ0ZW5hbnRJZCI6IjAwMDAwMCIsInVzZXJJZCI6MTk5MDI0MTgwMzA0NzM5NTMzMCwidXNlck5hbWUiOiJtankiLCJkZXB0SWQiOjEwMSwiZGVwdE5hbWUiOiLmt7HlnLPmgLvlhazlj7giLCJkZXB0Q2F0ZWdvcnkiOiIifQ.Ov7YH5GuiN17XQiCMnT65l9MXXFt-qGqisz-P5Fg98o"/>
+    <string id="33" parent="2" name="global:Authorization:login:last-active:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiJzeXNfdXNlcjoxOTkwMjQxODAzMDQ3Mzk1MzMwIiwicm5TdHIiOiJFWmVVbjJrbE9ibndVYXpzOERWZGtFTXYwTzIyem1OaSIsImNsaWVudGlkIjoiZTVjZDdlNDg5MWJmOTVkMWQxOTIwNmNlMjRhN2IzMmUiLCJ0ZW5hbnRJZCI6IjAwMDAwMCIsInVzZXJJZCI6MTk5MDI0MTgwMzA0NzM5NTMzMCwidXNlck5hbWUiOiJtankiLCJkZXB0SWQiOjEwMSwiZGVwdE5hbWUiOiLmt7HlnLPmgLvlhazlj7giLCJkZXB0Q2F0ZWdvcnkiOiIifQ.stBKCs3Q5PsGa7b8WLT78KiG09mCIAlExXpjqr2dY64"/>
+    <string id="34" parent="2" name="global:Authorization:login:last-active:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiJzeXNfdXNlcjoxOTkwMjQxODAzMDQ3Mzk1MzMwIiwicm5TdHIiOiJWOUNhbUsyMzBrcWZzZEFDa1F2c0pPanFQVjJXUzNGeSIsImNsaWVudGlkIjoiZTVjZDdlNDg5MWJmOTVkMWQxOTIwNmNlMjRhN2IzMmUiLCJ0ZW5hbnRJZCI6IjAwMDAwMCIsInVzZXJJZCI6MTk5MDI0MTgwMzA0NzM5NTMzMCwidXNlck5hbWUiOiJtankiLCJkZXB0SWQiOjEwMSwiZGVwdE5hbWUiOiLmt7HlnLPmgLvlhazlj7giLCJkZXB0Q2F0ZWdvcnkiOiIifQ.HTcWjaDe2p_6oE7dycJ2Jvhcbrx_0kGcedt201RCsI4"/>
+    <string id="35" parent="2" name="global:Authorization:login:last-active:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiJzeXNfdXNlcjoxOTkwMjQxODAzMDQ3Mzk1MzMwIiwicm5TdHIiOiJkV09XVEVRd1ZDdnFjcEpweEd3a1h3cms4QzRaVWE2aiIsImNsaWVudGlkIjoiZTVjZDdlNDg5MWJmOTVkMWQxOTIwNmNlMjRhN2IzMmUiLCJ0ZW5hbnRJZCI6IjAwMDAwMCIsInVzZXJJZCI6MTk5MDI0MTgwMzA0NzM5NTMzMCwidXNlck5hbWUiOiJtankiLCJkZXB0SWQiOjEwMSwiZGVwdE5hbWUiOiLmt7HlnLPmgLvlhazlj7giLCJkZXB0Q2F0ZWdvcnkiOiIifQ.oM8wDb8hjH77XyyCPBq2kPmMuhfzwmP9Usu7tdyhNg4"/>
+    <string id="36" parent="2" name="global:Authorization:login:session:sys_user:1990241803047395330"/>
+    <string id="37" parent="2" name="global:Authorization:login:token-session:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiJzeXNfdXNlcjoxOTkwMjQxODAzMDQ3Mzk1MzMwIiwicm5TdHIiOiIxMmNzTUExTjFkNXVGY3lxOElsUHN0NEhwbkNXUVlUZCIsImNsaWVudGlkIjoiZTVjZDdlNDg5MWJmOTVkMWQxOTIwNmNlMjRhN2IzMmUiLCJ0ZW5hbnRJZCI6IjAwMDAwMCIsInVzZXJJZCI6MTk5MDI0MTgwMzA0NzM5NTMzMCwidXNlck5hbWUiOiJtankiLCJkZXB0SWQiOjEwMSwiZGVwdE5hbWUiOiLmt7HlnLPmgLvlhazlj7giLCJkZXB0Q2F0ZWdvcnkiOiIifQ.Ov7YH5GuiN17XQiCMnT65l9MXXFt-qGqisz-P5Fg98o"/>
+    <string id="38" parent="2" name="global:Authorization:login:token-session:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiJzeXNfdXNlcjoxOTkwMjQxODAzMDQ3Mzk1MzMwIiwicm5TdHIiOiJFWmVVbjJrbE9ibndVYXpzOERWZGtFTXYwTzIyem1OaSIsImNsaWVudGlkIjoiZTVjZDdlNDg5MWJmOTVkMWQxOTIwNmNlMjRhN2IzMmUiLCJ0ZW5hbnRJZCI6IjAwMDAwMCIsInVzZXJJZCI6MTk5MDI0MTgwMzA0NzM5NTMzMCwidXNlck5hbWUiOiJtankiLCJkZXB0SWQiOjEwMSwiZGVwdE5hbWUiOiLmt7HlnLPmgLvlhazlj7giLCJkZXB0Q2F0ZWdvcnkiOiIifQ.stBKCs3Q5PsGa7b8WLT78KiG09mCIAlExXpjqr2dY64"/>
+    <string id="39" parent="2" name="global:Authorization:login:token-session:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiJzeXNfdXNlcjoxOTkwMjQxODAzMDQ3Mzk1MzMwIiwicm5TdHIiOiJWOUNhbUsyMzBrcWZzZEFDa1F2c0pPanFQVjJXUzNGeSIsImNsaWVudGlkIjoiZTVjZDdlNDg5MWJmOTVkMWQxOTIwNmNlMjRhN2IzMmUiLCJ0ZW5hbnRJZCI6IjAwMDAwMCIsInVzZXJJZCI6MTk5MDI0MTgwMzA0NzM5NTMzMCwidXNlck5hbWUiOiJtankiLCJkZXB0SWQiOjEwMSwiZGVwdE5hbWUiOiLmt7HlnLPmgLvlhazlj7giLCJkZXB0Q2F0ZWdvcnkiOiIifQ.HTcWjaDe2p_6oE7dycJ2Jvhcbrx_0kGcedt201RCsI4"/>
+    <string id="40" parent="2" name="global:Authorization:login:token-session:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiJzeXNfdXNlcjoxOTkwMjQxODAzMDQ3Mzk1MzMwIiwicm5TdHIiOiJkV09XVEVRd1ZDdnFjcEpweEd3a1h3cms4QzRaVWE2aiIsImNsaWVudGlkIjoiZTVjZDdlNDg5MWJmOTVkMWQxOTIwNmNlMjRhN2IzMmUiLCJ0ZW5hbnRJZCI6IjAwMDAwMCIsInVzZXJJZCI6MTk5MDI0MTgwMzA0NzM5NTMzMCwidXNlck5hbWUiOiJtankiLCJkZXB0SWQiOjEwMSwiZGVwdE5hbWUiOiLmt7HlnLPmgLvlhazlj7giLCJkZXB0Q2F0ZWdvcnkiOiIifQ.oM8wDb8hjH77XyyCPBq2kPmMuhfzwmP9Usu7tdyhNg4"/>
+    <string id="41" parent="2" name="global:Authorization:login:token:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiJzeXNfdXNlcjoxOTkwMjQxODAzMDQ3Mzk1MzMwIiwicm5TdHIiOiIxMmNzTUExTjFkNXVGY3lxOElsUHN0NEhwbkNXUVlUZCIsImNsaWVudGlkIjoiZTVjZDdlNDg5MWJmOTVkMWQxOTIwNmNlMjRhN2IzMmUiLCJ0ZW5hbnRJZCI6IjAwMDAwMCIsInVzZXJJZCI6MTk5MDI0MTgwMzA0NzM5NTMzMCwidXNlck5hbWUiOiJtankiLCJkZXB0SWQiOjEwMSwiZGVwdE5hbWUiOiLmt7HlnLPmgLvlhazlj7giLCJkZXB0Q2F0ZWdvcnkiOiIifQ.Ov7YH5GuiN17XQiCMnT65l9MXXFt-qGqisz-P5Fg98o"/>
+    <string id="42" parent="2" name="global:Authorization:login:token:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiJzeXNfdXNlcjoxOTkwMjQxODAzMDQ3Mzk1MzMwIiwicm5TdHIiOiJFWmVVbjJrbE9ibndVYXpzOERWZGtFTXYwTzIyem1OaSIsImNsaWVudGlkIjoiZTVjZDdlNDg5MWJmOTVkMWQxOTIwNmNlMjRhN2IzMmUiLCJ0ZW5hbnRJZCI6IjAwMDAwMCIsInVzZXJJZCI6MTk5MDI0MTgwMzA0NzM5NTMzMCwidXNlck5hbWUiOiJtankiLCJkZXB0SWQiOjEwMSwiZGVwdE5hbWUiOiLmt7HlnLPmgLvlhazlj7giLCJkZXB0Q2F0ZWdvcnkiOiIifQ.stBKCs3Q5PsGa7b8WLT78KiG09mCIAlExXpjqr2dY64"/>
+    <string id="43" parent="2" name="global:Authorization:login:token:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiJzeXNfdXNlcjoxOTkwMjQxODAzMDQ3Mzk1MzMwIiwicm5TdHIiOiJWOUNhbUsyMzBrcWZzZEFDa1F2c0pPanFQVjJXUzNGeSIsImNsaWVudGlkIjoiZTVjZDdlNDg5MWJmOTVkMWQxOTIwNmNlMjRhN2IzMmUiLCJ0ZW5hbnRJZCI6IjAwMDAwMCIsInVzZXJJZCI6MTk5MDI0MTgwMzA0NzM5NTMzMCwidXNlck5hbWUiOiJtankiLCJkZXB0SWQiOjEwMSwiZGVwdE5hbWUiOiLmt7HlnLPmgLvlhazlj7giLCJkZXB0Q2F0ZWdvcnkiOiIifQ.HTcWjaDe2p_6oE7dycJ2Jvhcbrx_0kGcedt201RCsI4"/>
+    <string id="44" parent="2" name="global:Authorization:login:token:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiJzeXNfdXNlcjoxOTkwMjQxODAzMDQ3Mzk1MzMwIiwicm5TdHIiOiJkV09XVEVRd1ZDdnFjcEpweEd3a1h3cms4QzRaVWE2aiIsImNsaWVudGlkIjoiZTVjZDdlNDg5MWJmOTVkMWQxOTIwNmNlMjRhN2IzMmUiLCJ0ZW5hbnRJZCI6IjAwMDAwMCIsInVzZXJJZCI6MTk5MDI0MTgwMzA0NzM5NTMzMCwidXNlck5hbWUiOiJtankiLCJkZXB0SWQiOjEwMSwiZGVwdE5hbWUiOiLmt7HlnLPmgLvlhazlj7giLCJkZXB0Q2F0ZWdvcnkiOiIifQ.oM8wDb8hjH77XyyCPBq2kPmMuhfzwmP9Usu7tdyhNg4"/>
+    <string id="45" parent="2" name="global:sys_oss:default_config"/>
+    <string id="46" parent="2" name="{global:rate_limit:/auth/code:0:0:0:0:0:0:0:1:}:value"/>
+  </database-model>
+</dataSource>
