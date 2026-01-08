@@ -1,13 +1,13 @@
 package org.dromara.web.domain.vo;
 
-import io.github.linpeilie.AutoMapperConfig__101;
+import io.github.linpeilie.AutoMapperConfig__155;
 import io.github.linpeilie.BaseMapper;
 import org.dromara.system.domain.vo.SysTenantVo;
 import org.dromara.system.domain.vo.SysTenantVoToTenantListVoMapper;
 import org.mapstruct.Mapper;
 
 @Mapper(
-    config = AutoMapperConfig__101.class,
+    config = AutoMapperConfig__155.class,
     uses = {SysTenantVoToTenantListVoMapper.class},
     imports = {}
 )

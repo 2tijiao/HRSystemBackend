@@ -103,6 +103,7 @@ public class SysDeptServiceImpl implements ISysDeptService, DeptService {
         lqw.eq(ObjectUtil.isNotEmpty(bo.getDeptNumber()), SysDept::getDeptNumber, bo.getDeptNumber());
         lqw.eq(ObjectUtil.isNotNull(bo.getParentId()), SysDept::getParentId, bo.getParentId());
         lqw.like(StringUtils.isNotBlank(bo.getDeptName()), SysDept::getDeptName, bo.getDeptName());
+        lqw.eq(StringUtils.isNotBlank(bo.getCategory()), SysDept::getCategory, bo.getCategory());
         lqw.like(StringUtils.isNotBlank(bo.getDeptCategory()), SysDept::getDeptCategory, bo.getDeptCategory());
         lqw.eq(StringUtils.isNotBlank(bo.getStatus()), SysDept::getStatus, bo.getStatus());
         lqw.between(params.get("beginTime") != null && params.get("endTime") != null,
@@ -163,7 +164,7 @@ public class SysDeptServiceImpl implements ISysDeptService, DeptService {
      * @param deptId 部门ID
      * @return 部门信息
      */
-    @Cacheable(cacheNames = CacheNames.SYS_DEPT, key = "#deptId")
+    //@Cacheable(cacheNames = CacheNames.SYS_DEPT, key = "#deptId")
     @Override
     public SysDeptVo selectDeptById(Long deptId) {
         SysDeptVo dept = baseMapper.selectVoById(deptId);
@@ -209,7 +210,7 @@ public class SysDeptServiceImpl implements ISysDeptService, DeptService {
      * @return 返回该部门的负责人ID
      */
     @Override
-    public Long selectDeptLeaderById(Long deptId) {
+    public String selectDeptLeaderById(Long deptId) {
         SysDeptVo vo = SpringUtils.getAopProxy(this).selectDeptById(deptId);
         return vo.getLeader();
     }

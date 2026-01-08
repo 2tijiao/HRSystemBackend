@@ -5,10 +5,10 @@ org.dromara.system.domain.bo.SysNoticeBo
 org.dromara.system.domain.vo.SysClientVo
 org.dromara.system.domain.vo.ProStaffEmnumberVo
 org.dromara.system.domain.vo.SysConfigVo
-org.dromara.system.domain.bo.SysOssBo
 org.dromara.system.domain.bo.ProStaffBo
-org.dromara.system.domain.vo.SysMenuVo
+org.dromara.system.domain.bo.SysOssBo
 org.dromara.system.domain.vo.ProStaffVo
+org.dromara.system.domain.vo.SysMenuVo
 org.dromara.system.domain.vo.SysUserVo
 org.dromara.system.domain.vo.SysDeptVo
 org.dromara.system.domain.bo.SysDictTypeBo
@@ -33,5 +33,5 @@ org.dromara.system.domain.vo.SysDictDataVo
 org.dromara.system.domain.bo.SysPostBo
 org.dromara.system.domain.bo.SysRoleBo
 org.dromara.system.domain.bo.SysClientBo
-org.dromara.system.domain.vo.SysPostVo
 org.dromara.system.domain.bo.SysConfigBo
+org.dromara.system.domain.vo.SysPostVo

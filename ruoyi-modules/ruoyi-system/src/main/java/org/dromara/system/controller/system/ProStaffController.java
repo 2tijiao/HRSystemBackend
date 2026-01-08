@@ -61,6 +61,9 @@ public class ProStaffController extends BaseController {
     @Log(title = "员工档案", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(ProStaffBo bo, HttpServletResponse response) {
+        // 【核心修改】：强制只导出状态为 "0" (正常/未冻结) 的数据
+        // 这样生成的 Excel 文件里根本就不会有冻结的人
+        bo.setIsFrozen("0");
         List<ProStaffVo> list = proStaffService.queryList(bo);
         ExcelUtil.exportExcel(list, "员工档案", ProStaffVo.class, response);
     }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-01-05T10:23:19+0800",
+    date = "2026-01-08T12:17:37+0800",
     comments = "version: 1.6.3, compiler: javac, environment: Java 17.0.16 (BellSoft)"
 )
 @Component
@@ -34,13 +34,12 @@ public class SysDeptBoToSysDeptMapperImpl implements SysDeptBoToSysDeptMapper {
         }
         sysDept.setDeptId( arg0.getDeptId() );
         sysDept.setDeptNumber( arg0.getDeptNumber() );
+        sysDept.setCategory( arg0.getCategory() );
         sysDept.setParentId( arg0.getParentId() );
         sysDept.setDeptName( arg0.getDeptName() );
         sysDept.setDeptCategory( arg0.getDeptCategory() );
         sysDept.setOrderNum( arg0.getOrderNum() );
-        if ( arg0.getLeader() != null ) {
-            sysDept.setLeader( String.valueOf( arg0.getLeader() ) );
-        }
+        sysDept.setLeader( arg0.getLeader() );
         sysDept.setPhone( arg0.getPhone() );
         sysDept.setEmail( arg0.getEmail() );
         sysDept.setStatus( arg0.getStatus() );
@@ -78,16 +77,12 @@ public class SysDeptBoToSysDeptMapperImpl implements SysDeptBoToSysDeptMapper {
         }
         arg1.setDeptId( arg0.getDeptId() );
         arg1.setDeptNumber( arg0.getDeptNumber() );
+        arg1.setCategory( arg0.getCategory() );
         arg1.setParentId( arg0.getParentId() );
         arg1.setDeptName( arg0.getDeptName() );
         arg1.setDeptCategory( arg0.getDeptCategory() );
         arg1.setOrderNum( arg0.getOrderNum() );
-        if ( arg0.getLeader() != null ) {
-            arg1.setLeader( String.valueOf( arg0.getLeader() ) );
-        }
-        else {
-            arg1.setLeader( null );
-        }
+        arg1.setLeader( arg0.getLeader() );
         arg1.setPhone( arg0.getPhone() );
         arg1.setEmail( arg0.getEmail() );
         arg1.setStatus( arg0.getStatus() );

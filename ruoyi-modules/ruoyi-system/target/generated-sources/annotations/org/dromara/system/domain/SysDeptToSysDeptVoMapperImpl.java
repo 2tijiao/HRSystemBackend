@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-01-05T10:23:18+0800",
+    date = "2026-01-08T12:17:39+0800",
     comments = "version: 1.6.3, compiler: javac, environment: Java 17.0.16 (BellSoft)"
 )
 @Component
@@ -27,11 +27,10 @@ public class SysDeptToSysDeptVoMapperImpl implements SysDeptToSysDeptVoMapper {
         sysDeptVo.setParentId( arg0.getParentId() );
         sysDeptVo.setAncestors( arg0.getAncestors() );
         sysDeptVo.setDeptName( arg0.getDeptName() );
+        sysDeptVo.setCategory( arg0.getCategory() );
         sysDeptVo.setDeptCategory( arg0.getDeptCategory() );
         sysDeptVo.setOrderNum( arg0.getOrderNum() );
-        if ( arg0.getLeader() != null ) {
-            sysDeptVo.setLeader( Long.parseLong( arg0.getLeader() ) );
-        }
+        sysDeptVo.setLeader( arg0.getLeader() );
         sysDeptVo.setPhone( arg0.getPhone() );
         sysDeptVo.setEmail( arg0.getEmail() );
         sysDeptVo.setStatus( arg0.getStatus() );
@@ -55,14 +54,10 @@ public class SysDeptToSysDeptVoMapperImpl implements SysDeptToSysDeptVoMapper {
         arg1.setParentId( arg0.getParentId() );
         arg1.setAncestors( arg0.getAncestors() );
         arg1.setDeptName( arg0.getDeptName() );
+        arg1.setCategory( arg0.getCategory() );
         arg1.setDeptCategory( arg0.getDeptCategory() );
         arg1.setOrderNum( arg0.getOrderNum() );
-        if ( arg0.getLeader() != null ) {
-            arg1.setLeader( Long.parseLong( arg0.getLeader() ) );
-        }
-        else {
-            arg1.setLeader( null );
-        }
+        arg1.setLeader( arg0.getLeader() );
         arg1.setPhone( arg0.getPhone() );
         arg1.setEmail( arg0.getEmail() );
         arg1.setStatus( arg0.getStatus() );

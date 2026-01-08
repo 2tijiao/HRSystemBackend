@@ -88,4 +88,6 @@ public interface IProStaffService {
     Long getPostIdByDeptIdAndPostName(Long deptId, String postName);
 
     Object queryByIdCardNum(@Size(min = 0, max = 18, message = "身份证长度不能超过{max}个字符") String idCardNumber);
+
+    ProStaff queryPrioritizingActive(String idCardNumber, Long deptId, String phonenumber);
 }

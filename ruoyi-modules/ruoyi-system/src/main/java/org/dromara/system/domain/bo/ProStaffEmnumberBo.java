@@ -26,4 +26,7 @@ public class ProStaffEmnumberBo extends BaseEntity {
      */
     private String employeeNumber;
 
+
+    private String phonenumber;
+
 }

@@ -35,7 +35,7 @@ captcha:
 # 日志配置
 logging:
   level:
-    org.dromara: info
+    org.dromara: warn
     org.springframework: warn
     org.mybatis.spring.mapper: error
     org.apache.fury: warn
@@ -69,7 +69,7 @@ spring:
     # 国际化资源文件路径
     basename: i18n/messages
   profiles:
-    active: dev
+    active: prod
   # 文件上传
   servlet:
     multipart:

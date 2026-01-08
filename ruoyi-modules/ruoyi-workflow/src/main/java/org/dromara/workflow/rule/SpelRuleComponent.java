@@ -27,8 +27,8 @@ public class SpelRuleComponent {
     /**
      * 通过发起人部门id获取部门负责人
      */
-    public Long selectDeptLeaderById(Long initiatorDeptId) {
-        Long leaderId = deptService.selectDeptLeaderById(initiatorDeptId);
+    public String selectDeptLeaderById(Long initiatorDeptId) {
+        String leaderId = deptService.selectDeptLeaderById(initiatorDeptId);
         if (ObjectUtil.isNull(leaderId)) {
             throw new ServiceException("当前部门未设置负责人，请联系管理员操作。");
         }

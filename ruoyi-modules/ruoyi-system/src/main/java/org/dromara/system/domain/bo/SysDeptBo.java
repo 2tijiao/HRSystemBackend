@@ -44,6 +44,11 @@ public class SysDeptBo extends BaseEntity {
     private String deptNumber;
 
     /**
+     * 部门类型
+     */
+    private String category;
+
+    /**
      * 部门类别编码
      */
     @Size(min = 0, max = 100, message = "部门类别编码长度不能超过{max}个字符")
@@ -58,7 +63,7 @@ public class SysDeptBo extends BaseEntity {
     /**
      * 负责人
      */
-    private Long leader;
+    private String leader;
 
     /**
      * 联系电话

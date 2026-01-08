@@ -5,7 +5,7 @@ spring.servlet.multipart.location: /ruoyi/server/temp
 spring.boot.admin.client:
   # 增加客户端开关
   enabled: true
-  url: http://localhost:9090/admin
+  url: http://10.0.182.39:9090/admin
   instance:
     service-host-type: IP
     metadata:
@@ -22,14 +22,14 @@ snail-job:
   # SnailJob 接入验证令牌 详见 script/sql/ry_job.sql `sj_group_config`表
   token: "SJ_cKqBTPzCsWA3VyuCfFoccmuIEGXjr5KT"
   server:
-    host: 127.0.0.1
+    host: 10.0.182.39
     port: 17888
   # 命名空间UUID 详见 script/sql/ry_job.sql `sj_namespace`表`unique_id`字段
   namespace: ${spring.profiles.active}
   # 随主应用端口漂移
   port: 2${server.port}
   # 客户端ip指定
-  host:
+  host: 10.0.182.39
 
 --- # 数据源配置
 spring:
@@ -45,14 +45,21 @@ spring:
       strict: true
       datasource:
         # 主库数据源
+#        master:
+#          type: ${spring.datasource.type}
+#          driverClassName: com.mysql.cj.jdbc.Driver
+#          # jdbc 所有参数配置参考 https://lionli.blog.csdn.net/article/details/122018562
+#          # rewriteBatchedStatements=true 批处理优化 大幅提升批量插入更新删除性能(对数据库有性能损耗 使用批量操作应考虑性能问题)
+#          url: jdbc:mysql://localhost:3306/ry-vue?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&autoReconnect=true&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
+#          username: root
+#          password: root
+
         master:
           type: ${spring.datasource.type}
-          driverClassName: com.mysql.cj.jdbc.Driver
-          # jdbc 所有参数配置参考 https://lionli.blog.csdn.net/article/details/122018562
-          # rewriteBatchedStatements=true 批处理优化 大幅提升批量插入更新删除性能(对数据库有性能损耗 使用批量操作应考虑性能问题)
-          url: jdbc:mysql://localhost:3306/ry-vue?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&autoReconnect=true&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
-          username: root
-          password: root
+          driverClassName: org.postgresql.Driver
+          url: jdbc:postgresql://10.0.182.38:5401/staff_management_db?currentSchema=public
+          username: yh_hrSystem
+          password: hphAV~/TD:lG}Khh#LXq2gm2|n:!9NO1
 #        # 从库数据源
 #        slave:
 #          lazy: true
@@ -99,13 +106,13 @@ spring:
 spring.data:
   redis:
     # 地址
-    host: localhost
+    host: 10.0.182.38
     # 端口，默认为6379
-    port: 6379
+    port: 7001
     # 数据库索引
     database: 0
     # redis 密码必须配置
-    password: ruoyi123
+    password: T3#uY5cL9$wD2pV7^sQ1
     # 连接超时时间
     timeout: 10s
     # 是否开启ssl

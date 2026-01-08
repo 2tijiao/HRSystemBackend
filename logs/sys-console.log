@@ -1,10 +1,131 @@
-2026-01-05 10:23:39 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.3.Final
-2026-01-05 10:23:39 [main] INFO  org.dromara.DromaraApplication - Starting DromaraApplication using Java 17.0.16 with PID 5556 (D:\MaJingyao\RuoYi-Vue-Plus-5.X\ruoyi-admin\target\classes started by KitMa in D:\MaJingyao\RuoYi-Vue-Plus-5.X)
-2026-01-05 10:23:39 [main] INFO  org.dromara.DromaraApplication - The following 1 profile is active: "dev"
-2026-01-05 10:24:06 [main] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
-2026-01-05 10:24:08 [main] INFO  c.b.d.d.DynamicRoutingDataSource - dynamic-datasource detect P6SPY plugin and enabled it
-2026-01-05 10:24:08 [main] INFO  com.zaxxer.hikari.HikariDataSource - master - Starting...
-2026-01-05 10:24:09 [main] INFO  com.zaxxer.hikari.pool.HikariPool - master - Added connection org.postgresql.jdbc.PgConnection@10264cb0
-2026-01-05 10:24:09 [main] INFO  com.zaxxer.hikari.HikariDataSource - master - Start completed.
-2026-01-05 10:24:09 [main] INFO  c.b.d.d.DynamicRoutingDataSource - dynamic-datasource - add a datasource named [master] success
-2026-01-05 10:24:09 [main] INFO  c.b.d.d.DynamicRoutingDataSource - dynamic-datasource initial loaded [1] datasource,primary datasource named [master]
+2026-01-08 09:12:48 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.3.Final
+2026-01-08 09:12:54 [main] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2026-01-08 09:12:55 [main] INFO  com.zaxxer.hikari.HikariDataSource - master - Starting...
+2026-01-08 09:12:55 [main] INFO  com.zaxxer.hikari.pool.HikariPool - master - Added connection org.postgresql.jdbc.PgConnection@ae85aad
+2026-01-08 09:12:55 [main] INFO  com.zaxxer.hikari.HikariDataSource - master - Start completed.
+2026-01-08 09:12:55 [main] INFO  c.b.d.d.DynamicRoutingDataSource - dynamic-datasource - add a datasource named [master] success
+2026-01-08 09:12:55 [main] INFO  c.b.d.d.DynamicRoutingDataSource - dynamic-datasource initial loaded [1] datasource,primary datasource named [master]
+2026-01-08 09:12:56 [main] INFO  org.redisson.Version - Redisson 3.51.0
+2026-01-08 09:12:57 [redisson-netty-1-6] INFO  o.r.connection.ConnectionsHolder - 1 connections initialized for 10.0.182.38/10.0.182.38:7001
+2026-01-08 09:12:57 [redisson-netty-1-3] INFO  o.r.connection.ConnectionsHolder - 32 connections initialized for 10.0.182.38/10.0.182.38:7001
+2026-01-08 09:12:58 [main] INFO  c.a.s.c.j.c.e.b.AbstractScriptExecutor$SnailFileUtils - [FileUtils] [workspace] use user.home as workspace: C:\Users\KitMa/snailJob/worker
+2026-01-08 09:12:58 [main] INFO  c.a.s.c.j.c.e.b.AbstractScriptExecutor$SnailFileUtils - [FileUtils] [workspace] use user.home as workspace: C:\Users\KitMa/snailJob/worker
+2026-01-08 09:12:58 [main] INFO  c.a.s.c.j.c.e.b.AbstractScriptExecutor$SnailFileUtils - [FileUtils] [workspace] use user.home as workspace: C:\Users\KitMa/snailJob/worker
+2026-01-08 09:12:59 [main] INFO  c.a.s.c.s.SnailJobClientJobCoreAutoConfiguration - Snail-Job 客户端IP为: 10.0.182.39
+2026-01-08 09:12:59 [main] INFO  c.b.m.e.s.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@14bae047
+2026-01-08 09:13:11 [main] INFO  io.undertow - starting server: Undertow - 2.3.20.Final
+2026-01-08 09:13:11 [main] INFO  org.xnio - XNIO version 3.8.16.Final
+2026-01-08 09:13:12 [main] INFO  org.xnio.nio - XNIO NIO Implementation Version 3.8.16.Final
+2026-01-08 09:13:12 [main] INFO  org.jboss.threads - JBoss Threads version 3.7.0.Final
+2026-01-08 09:13:12 [main] INFO  c.a.s.c.c.init.SnailJobStartListener - snail-job client is preparing to start... v1.8.0
+2026-01-08 09:13:13 [main] INFO  c.a.s.c.c.r.c.g.SnailJobGrpcClient - gRPC client started connect to server
+2026-01-08 09:13:13 [main] INFO  c.a.s.c.c.rpc.server.SnailGrpcServer - ------> snail-job remoting server start success, grpc = com.aizuda.snailjob.client.common.rpc.server.SnailGrpcServer, port = 28080
+2026-01-08 09:13:14 [main] INFO  c.a.s.c.c.init.SnailJobStartListener - snail-job client started successfully v1.8.0
+2026-01-08 09:13:14 [registrationTask1] INFO  d.c.b.a.c.r.DefaultApplicationRegistrator - Application registered itself as 0b7f8cd8a427
+2026-01-08 09:13:15 [RMI TCP Connection(2)-10.0.72.57] INFO  io.undertow.servlet - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-08 09:13:17 [XNIO-1 task-2] ERROR o.d.c.s.h.SaTokenExceptionHandler - 请求地址'/system/user/getInfo',认证失败'token 已被冻结：eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiJzeXNfdXNlcjoxIiwicm5TdHIiOiJITmlCdmFjSkUyUmRqeHJkV21ha2dvZk1FU1MzUE1yMyIsImNsaWVudGlkIjoiZTVjZDdlNDg5MWJmOTVkMWQxOTIwNmNlMjRhN2IzMmUiLCJ0ZW5hbnRJZCI6IjAwMDAwMCIsInVzZXJJZCI6IjEiLCJ1c2VyTmFtZSI6ImFkbWluIiwiZGVwdElkIjoxLCJkZXB0TmFtZSI6IuW5v-S4nOebiOa1qeW3peiJuuWItuWTgeaciemZkOWFrOWPuCIsImRlcHRDYXRlZ29yeSI6IiJ9.WSV7cIZQ-Pzffx7oIlKVoSPS-0grn9qlmcrzA9ETS1k',无法访问系统资源
+2026-01-08 09:16:50 [XNIO-1 task-4] ERROR o.d.c.w.h.GlobalExceptionHandler - 验证码已失效
+2026-01-08 10:21:31 [Thread-6] INFO  c.a.s.c.c.window.SlidingRingWindow - JVM is about to exit, emitting data in the Window
+2026-01-08 10:21:31 [SpringApplicationShutdownHook] INFO  c.a.s.c.c.init.SnailJobCloseListener - snail-job client about to shutdown v1.8.0
+2026-01-08 10:21:31 [SpringApplicationShutdownHook] INFO  c.a.s.c.c.l.report.AbstractLogReport - AsyncReport Log about to shutdown
+2026-01-08 10:21:31 [SpringApplicationShutdownHook] INFO  c.a.s.c.c.window.SlidingRingWindow - Sliding window is about to exit, emitting data in the Window
+2026-01-08 10:21:31 [SpringApplicationShutdownHook] INFO  c.a.s.c.c.l.report.AbstractLogReport - AsyncReport Log has been shutdown
+2026-01-08 10:21:31 [SpringApplicationShutdownHook] INFO  c.a.s.c.c.init.SnailJobCloseListener - snail-job client closed successfully v1.8.0
+2026-01-08 10:21:34 [snail-job-grpc-client-executor-10.0.182.39-480] ERROR c.a.s.c.c.handler.ClientRegister - heartbeat check requestId:[480] message:[UNAVAILABLE: Channel shutdown invoked]
+2026-01-08 10:21:55 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.3.Final
+2026-01-08 10:21:58 [main] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2026-01-08 10:21:59 [main] INFO  com.zaxxer.hikari.HikariDataSource - master - Starting...
+2026-01-08 10:21:59 [main] INFO  com.zaxxer.hikari.pool.HikariPool - master - Added connection org.postgresql.jdbc.PgConnection@36e9794c
+2026-01-08 10:21:59 [main] INFO  com.zaxxer.hikari.HikariDataSource - master - Start completed.
+2026-01-08 10:21:59 [main] INFO  c.b.d.d.DynamicRoutingDataSource - dynamic-datasource - add a datasource named [master] success
+2026-01-08 10:21:59 [main] INFO  c.b.d.d.DynamicRoutingDataSource - dynamic-datasource initial loaded [1] datasource,primary datasource named [master]
+2026-01-08 10:22:00 [main] INFO  org.redisson.Version - Redisson 3.51.0
+2026-01-08 10:22:01 [redisson-netty-1-5] INFO  o.r.connection.ConnectionsHolder - 1 connections initialized for 10.0.182.38/10.0.182.38:7001
+2026-01-08 10:22:01 [redisson-netty-1-3] INFO  o.r.connection.ConnectionsHolder - 32 connections initialized for 10.0.182.38/10.0.182.38:7001
+2026-01-08 10:22:02 [main] INFO  c.a.s.c.j.c.e.b.AbstractScriptExecutor$SnailFileUtils - [FileUtils] [workspace] use user.home as workspace: C:\Users\KitMa/snailJob/worker
+2026-01-08 10:22:02 [main] INFO  c.a.s.c.j.c.e.b.AbstractScriptExecutor$SnailFileUtils - [FileUtils] [workspace] use user.home as workspace: C:\Users\KitMa/snailJob/worker
+2026-01-08 10:22:02 [main] INFO  c.a.s.c.j.c.e.b.AbstractScriptExecutor$SnailFileUtils - [FileUtils] [workspace] use user.home as workspace: C:\Users\KitMa/snailJob/worker
+2026-01-08 10:22:03 [main] INFO  c.a.s.c.s.SnailJobClientJobCoreAutoConfiguration - Snail-Job 客户端IP为: 10.0.182.39
+2026-01-08 10:22:03 [main] INFO  c.b.m.e.s.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@29a23c3d
+2026-01-08 10:22:10 [main] INFO  io.undertow - starting server: Undertow - 2.3.20.Final
+2026-01-08 10:22:10 [main] INFO  org.xnio - XNIO version 3.8.16.Final
+2026-01-08 10:22:10 [main] INFO  org.xnio.nio - XNIO NIO Implementation Version 3.8.16.Final
+2026-01-08 10:22:10 [main] INFO  org.jboss.threads - JBoss Threads version 3.7.0.Final
+2026-01-08 10:22:10 [main] INFO  c.a.s.c.c.init.SnailJobStartListener - snail-job client is preparing to start... v1.8.0
+2026-01-08 10:22:11 [main] INFO  c.a.s.c.c.r.c.g.SnailJobGrpcClient - gRPC client started connect to server
+2026-01-08 10:22:11 [main] INFO  c.a.s.c.c.rpc.server.SnailGrpcServer - ------> snail-job remoting server start success, grpc = com.aizuda.snailjob.client.common.rpc.server.SnailGrpcServer, port = 28080
+2026-01-08 10:22:11 [main] INFO  c.a.s.c.c.init.SnailJobStartListener - snail-job client started successfully v1.8.0
+2026-01-08 10:22:12 [registrationTask1] INFO  d.c.b.a.c.r.DefaultApplicationRegistrator - Application registered itself as 0b7f8cd8a427
+2026-01-08 10:30:04 [XNIO-1 task-2] INFO  io.undertow.servlet - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-08 10:30:04 [XNIO-1 task-2] ERROR o.d.c.s.h.SaTokenExceptionHandler - 请求地址'/system/user/getInfo',认证失败'token 已被冻结：eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiJzeXNfdXNlcjoxIiwicm5TdHIiOiJXSmw4aVNzWlM5SnpxVExEZVlsSXBMblFzZENIeUFpdCIsImNsaWVudGlkIjoiZTVjZDdlNDg5MWJmOTVkMWQxOTIwNmNlMjRhN2IzMmUiLCJ0ZW5hbnRJZCI6IjAwMDAwMCIsInVzZXJJZCI6IjEiLCJ1c2VyTmFtZSI6ImFkbWluIiwiZGVwdElkIjoxLCJkZXB0TmFtZSI6IuW5v-S4nOebiOa1qeW3peiJuuWItuWTgeaciemZkOWFrOWPuCIsImRlcHRDYXRlZ29yeSI6IiJ9.Hxm4-4w7uvkd7CkfWIC-PYRl6R9SAdU8CwMjAcwiHJA',无法访问系统资源
+2026-01-08 10:30:46 [XNIO-1 task-3] ERROR o.d.c.s.h.SaTokenExceptionHandler - 请求地址'/system/user/deptTree',权限码校验失败'无此权限：system:user:list'
+2026-01-08 10:31:39 [XNIO-1 task-3] ERROR o.d.c.w.h.GlobalExceptionHandler - 验证码已失效
+2026-01-08 11:05:14 [XNIO-1 task-2] ERROR o.d.c.w.h.GlobalExceptionHandler - 对不起, 您的账号：admin 不存在.
+2026-01-08 11:57:01 [XNIO-1 task-4] ERROR o.d.c.s.h.SaTokenExceptionHandler - 请求地址'/system/user/list/dept/1',认证失败'token 已被冻结：eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiJzeXNfdXNlcjoyMDA5MDk5ODc2ODU1ODM2NjczIiwicm5TdHIiOiJ2UzVycmowTzhOZ0M4b0NEbWpEZTNMRXF1aHZQY3NXOSIsImNsaWVudGlkIjoiZTVjZDdlNDg5MWJmOTVkMWQxOTIwNmNlMjRhN2IzMmUiLCJ0ZW5hbnRJZCI6IjAwMDAwMCIsInVzZXJJZCI6IjIwMDkwOTk4NzY4NTU4MzY2NzMiLCJ1c2VyTmFtZSI6ImhyIiwiZGVwdElkIjo1OTkxOTk4OTIsImRlcHROYW1lIjoi5Lq65Yqb6LWE5rqQ6YOoIiwiZGVwdENhdGVnb3J5IjoiIn0.KQwyi7leaa_gQRuyuVKN7SVjQPTPEHz_3ARCPz8RNts',无法访问系统资源
+2026-01-08 11:57:01 [XNIO-1 task-5] ERROR o.d.c.s.h.SaTokenExceptionHandler - 请求地址'/system/dept/1',认证失败'token 已被冻结：eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiJzeXNfdXNlcjoyMDA5MDk5ODc2ODU1ODM2NjczIiwicm5TdHIiOiJ2UzVycmowTzhOZ0M4b0NEbWpEZTNMRXF1aHZQY3NXOSIsImNsaWVudGlkIjoiZTVjZDdlNDg5MWJmOTVkMWQxOTIwNmNlMjRhN2IzMmUiLCJ0ZW5hbnRJZCI6IjAwMDAwMCIsInVzZXJJZCI6IjIwMDkwOTk4NzY4NTU4MzY2NzMiLCJ1c2VyTmFtZSI6ImhyIiwiZGVwdElkIjo1OTkxOTk4OTIsImRlcHROYW1lIjoi5Lq65Yqb6LWE5rqQ6YOoIiwiZGVwdENhdGVnb3J5IjoiIn0.KQwyi7leaa_gQRuyuVKN7SVjQPTPEHz_3ARCPz8RNts',无法访问系统资源
+2026-01-08 11:57:19 [XNIO-1 task-2] ERROR o.d.c.w.h.GlobalExceptionHandler - 验证码已失效
+2026-01-08 12:14:25 [Thread-5] INFO  c.a.s.c.c.window.SlidingRingWindow - JVM is about to exit, emitting data in the Window
+2026-01-08 12:14:25 [SpringApplicationShutdownHook] INFO  c.a.s.c.c.init.SnailJobCloseListener - snail-job client about to shutdown v1.8.0
+2026-01-08 12:14:25 [SpringApplicationShutdownHook] INFO  c.a.s.c.c.l.report.AbstractLogReport - AsyncReport Log about to shutdown
+2026-01-08 12:14:25 [SpringApplicationShutdownHook] INFO  c.a.s.c.c.window.SlidingRingWindow - Sliding window is about to exit, emitting data in the Window
+2026-01-08 12:14:25 [SpringApplicationShutdownHook] INFO  c.a.s.c.c.l.report.AbstractLogReport - AsyncReport Log has been shutdown
+2026-01-08 12:14:25 [SpringApplicationShutdownHook] INFO  c.a.s.c.c.init.SnailJobCloseListener - snail-job client closed successfully v1.8.0
+2026-01-08 12:14:32 [snail-job-grpc-client-executor-10.0.182.39-788] ERROR c.a.s.c.c.handler.ClientRegister - heartbeat check requestId:[788] message:[UNAVAILABLE: Channel shutdown invoked]
+2026-01-08 14:30:56 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.3.Final
+2026-01-08 14:30:59 [main] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2026-01-08 14:30:59 [main] INFO  com.zaxxer.hikari.HikariDataSource - master - Starting...
+2026-01-08 14:30:59 [main] INFO  com.zaxxer.hikari.pool.HikariPool - master - Added connection org.postgresql.jdbc.PgConnection@4d0e6424
+2026-01-08 14:30:59 [main] INFO  com.zaxxer.hikari.HikariDataSource - master - Start completed.
+2026-01-08 14:30:59 [main] INFO  c.b.d.d.DynamicRoutingDataSource - dynamic-datasource - add a datasource named [master] success
+2026-01-08 14:30:59 [main] INFO  c.b.d.d.DynamicRoutingDataSource - dynamic-datasource initial loaded [1] datasource,primary datasource named [master]
+2026-01-08 14:31:01 [main] INFO  org.redisson.Version - Redisson 3.51.0
+2026-01-08 14:31:03 [redisson-netty-1-6] INFO  o.r.connection.ConnectionsHolder - 1 connections initialized for 10.0.182.38/10.0.182.38:7001
+2026-01-08 14:31:04 [redisson-netty-1-3] INFO  o.r.connection.ConnectionsHolder - 32 connections initialized for 10.0.182.38/10.0.182.38:7001
+2026-01-08 14:31:05 [main] INFO  c.a.s.c.j.c.e.b.AbstractScriptExecutor$SnailFileUtils - [FileUtils] [workspace] use user.home as workspace: C:\Users\KitMa/snailJob/worker
+2026-01-08 14:31:05 [main] INFO  c.a.s.c.j.c.e.b.AbstractScriptExecutor$SnailFileUtils - [FileUtils] [workspace] use user.home as workspace: C:\Users\KitMa/snailJob/worker
+2026-01-08 14:31:05 [main] INFO  c.a.s.c.j.c.e.b.AbstractScriptExecutor$SnailFileUtils - [FileUtils] [workspace] use user.home as workspace: C:\Users\KitMa/snailJob/worker
+2026-01-08 14:31:08 [main] INFO  c.a.s.c.s.SnailJobClientJobCoreAutoConfiguration - Snail-Job 客户端IP为: 10.0.182.39
+2026-01-08 14:31:08 [main] INFO  c.b.m.e.s.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@1ec7d8b3
+2026-01-08 14:31:16 [main] INFO  io.undertow - starting server: Undertow - 2.3.20.Final
+2026-01-08 14:31:16 [main] INFO  org.xnio - XNIO version 3.8.16.Final
+2026-01-08 14:31:16 [main] INFO  org.xnio.nio - XNIO NIO Implementation Version 3.8.16.Final
+2026-01-08 14:31:16 [main] INFO  org.jboss.threads - JBoss Threads version 3.7.0.Final
+2026-01-08 14:31:16 [main] INFO  c.a.s.c.c.init.SnailJobStartListener - snail-job client is preparing to start... v1.8.0
+2026-01-08 14:31:17 [main] INFO  c.a.s.c.c.r.c.g.SnailJobGrpcClient - gRPC client started connect to server
+2026-01-08 14:31:17 [main] INFO  c.a.s.c.c.rpc.server.SnailGrpcServer - ------> snail-job remoting server start success, grpc = com.aizuda.snailjob.client.common.rpc.server.SnailGrpcServer, port = 28080
+2026-01-08 14:31:18 [main] INFO  c.a.s.c.c.init.SnailJobStartListener - snail-job client started successfully v1.8.0
+2026-01-08 14:31:18 [registrationTask1] INFO  d.c.b.a.c.r.DefaultApplicationRegistrator - Application registered itself as 0b7f8cd8a427
+2026-01-08 14:31:18 [RMI TCP Connection(18)-10.0.72.57] INFO  io.undertow.servlet - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-08 14:31:23 [XNIO-1 task-2] ERROR o.d.c.s.h.SaTokenExceptionHandler - 请求地址'/system/user/getInfo',认证失败'token 已被冻结：eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiJzeXNfdXNlcjoyMDA5MDk5ODc2ODU1ODM2NjczIiwicm5TdHIiOiI1elhhTUYyb3dDMGtqelNHR1RkdHZPMGdvVGx2MVIxViIsImNsaWVudGlkIjoiZTVjZDdlNDg5MWJmOTVkMWQxOTIwNmNlMjRhN2IzMmUiLCJ0ZW5hbnRJZCI6IjAwMDAwMCIsInVzZXJJZCI6IjIwMDkwOTk4NzY4NTU4MzY2NzMiLCJ1c2VyTmFtZSI6ImhyIiwiZGVwdElkIjo1OTkxOTk4OTIsImRlcHROYW1lIjoi5Lq65Yqb6LWE5rqQ6YOoIiwiZGVwdENhdGVnb3J5IjoiIn0.Itdluq4N4kgWtWfE-jm6jks0i-wKtDOGOo65DUESetI',无法访问系统资源
+2026-01-08 15:15:18 [Thread-5] INFO  c.a.s.c.c.window.SlidingRingWindow - JVM is about to exit, emitting data in the Window
+2026-01-08 15:15:18 [SpringApplicationShutdownHook] INFO  c.a.s.c.c.init.SnailJobCloseListener - snail-job client about to shutdown v1.8.0
+2026-01-08 15:15:18 [SpringApplicationShutdownHook] INFO  c.a.s.c.c.l.report.AbstractLogReport - AsyncReport Log about to shutdown
+2026-01-08 15:15:18 [SpringApplicationShutdownHook] INFO  c.a.s.c.c.window.SlidingRingWindow - Sliding window is about to exit, emitting data in the Window
+2026-01-08 15:15:18 [SpringApplicationShutdownHook] INFO  c.a.s.c.c.l.report.AbstractLogReport - AsyncReport Log has been shutdown
+2026-01-08 15:15:18 [SpringApplicationShutdownHook] INFO  c.a.s.c.c.init.SnailJobCloseListener - snail-job client closed successfully v1.8.0
+2026-01-08 15:15:25 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.3.Final
+2026-01-08 15:15:28 [main] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2026-01-08 15:15:29 [main] INFO  com.zaxxer.hikari.HikariDataSource - master - Starting...
+2026-01-08 15:15:29 [main] INFO  com.zaxxer.hikari.pool.HikariPool - master - Added connection org.postgresql.jdbc.PgConnection@6da86e98
+2026-01-08 15:15:29 [main] INFO  com.zaxxer.hikari.HikariDataSource - master - Start completed.
+2026-01-08 15:15:29 [main] INFO  c.b.d.d.DynamicRoutingDataSource - dynamic-datasource - add a datasource named [master] success
+2026-01-08 15:15:29 [main] INFO  c.b.d.d.DynamicRoutingDataSource - dynamic-datasource initial loaded [1] datasource,primary datasource named [master]
+2026-01-08 15:15:30 [main] INFO  org.redisson.Version - Redisson 3.51.0
+2026-01-08 15:15:30 [redisson-netty-1-6] INFO  o.r.connection.ConnectionsHolder - 1 connections initialized for 10.0.182.38/10.0.182.38:7001
+2026-01-08 15:15:30 [redisson-netty-1-3] INFO  o.r.connection.ConnectionsHolder - 32 connections initialized for 10.0.182.38/10.0.182.38:7001
+2026-01-08 15:15:31 [main] INFO  c.a.s.c.j.c.e.b.AbstractScriptExecutor$SnailFileUtils - [FileUtils] [workspace] use user.home as workspace: C:\Users\KitMa/snailJob/worker
+2026-01-08 15:15:31 [main] INFO  c.a.s.c.j.c.e.b.AbstractScriptExecutor$SnailFileUtils - [FileUtils] [workspace] use user.home as workspace: C:\Users\KitMa/snailJob/worker
+2026-01-08 15:15:31 [main] INFO  c.a.s.c.j.c.e.b.AbstractScriptExecutor$SnailFileUtils - [FileUtils] [workspace] use user.home as workspace: C:\Users\KitMa/snailJob/worker
+2026-01-08 15:15:32 [main] INFO  c.a.s.c.s.SnailJobClientJobCoreAutoConfiguration - Snail-Job 客户端IP为: 10.0.182.39
+2026-01-08 15:15:32 [main] INFO  c.b.m.e.s.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@3b0ca5e1
+2026-01-08 15:15:39 [main] INFO  io.undertow - starting server: Undertow - 2.3.20.Final
+2026-01-08 15:15:39 [main] INFO  org.xnio - XNIO version 3.8.16.Final
+2026-01-08 15:15:39 [main] INFO  org.xnio.nio - XNIO NIO Implementation Version 3.8.16.Final
+2026-01-08 15:15:39 [main] INFO  org.jboss.threads - JBoss Threads version 3.7.0.Final
+2026-01-08 15:15:39 [main] INFO  c.a.s.c.c.init.SnailJobStartListener - snail-job client is preparing to start... v1.8.0
+2026-01-08 15:15:39 [main] INFO  c.a.s.c.c.r.c.g.SnailJobGrpcClient - gRPC client started connect to server
+2026-01-08 15:15:39 [main] INFO  c.a.s.c.c.rpc.server.SnailGrpcServer - ------> snail-job remoting server start success, grpc = com.aizuda.snailjob.client.common.rpc.server.SnailGrpcServer, port = 28080
+2026-01-08 15:15:40 [main] INFO  c.a.s.c.c.init.SnailJobStartListener - snail-job client started successfully v1.8.0
+2026-01-08 15:15:40 [RMI TCP Connection(1)-10.0.72.57] INFO  io.undertow.servlet - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-08 15:15:40 [registrationTask1] INFO  d.c.b.a.c.r.DefaultApplicationRegistrator - Application registered itself as 0b7f8cd8a427
+2026-01-08 15:21:40 [XNIO-1 task-2] ERROR o.d.c.s.h.SaTokenExceptionHandler - 请求地址'/system/user/getInfo',认证失败'token 已被冻结：eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiJzeXNfdXNlcjoxIiwicm5TdHIiOiJLdnhhNW1HRmRNRmZ1VHM2a0ZWQXpZZG9yY2ZkZXJPRSIsImNsaWVudGlkIjoiZTVjZDdlNDg5MWJmOTVkMWQxOTIwNmNlMjRhN2IzMmUiLCJ0ZW5hbnRJZCI6IjAwMDAwMCIsInVzZXJJZCI6IjEiLCJ1c2VyTmFtZSI6ImFkbWluIiwiZGVwdElkIjoxLCJkZXB0TmFtZSI6IuW5v-S4nOebiOa1qeW3peiJuuWItuWTgeaciemZkOWFrOWPuCIsImRlcHRDYXRlZ29yeSI6IiJ9.lrK_-CTc0eZa8chJ7a3LrratKCM6cn_f_OF9yZ4844o',无法访问系统资源

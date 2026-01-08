@@ -87,6 +87,7 @@ public class ProStaffVo implements Serializable {
      * 员工性别
      */
     @ExcelProperty(value = "员工性别")
+    @ExcelDictFormat(dictType = "sys_user_sex")
     private String sex;
 
     /**

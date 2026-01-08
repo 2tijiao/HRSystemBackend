@@ -1,10 +1,23 @@
 spring:
   datasource:
+#    type: com.zaxxer.hikari.HikariDataSource
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/ry-vue?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+#    username: root
+#    password: root
+#    hikari:
+#      connection-timeout: 30000
+#      validation-timeout: 5000
+#      minimum-idle: 10
+#      maximum-pool-size: 20
+#      idle-timeout: 600000
+#      max-lifetime: 900000
+#      keepaliveTime: 30000
     type: com.zaxxer.hikari.HikariDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/ry-vue?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-    username: root
-    password: root
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://10.0.182.38:5400/staff_management_db?useUnicode=true&characterEncoding=utf8&useSSL=true&autoReconnect=true&reWriteBatchedInserts=true
+    username: yh_hrSystem
+    password: hr_TEST
     hikari:
       connection-timeout: 30000
       validation-timeout: 5000

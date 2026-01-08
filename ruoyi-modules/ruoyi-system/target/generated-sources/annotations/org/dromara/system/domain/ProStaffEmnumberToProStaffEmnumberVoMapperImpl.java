@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-01-05T10:23:18+0800",
+    date = "2026-01-08T12:17:38+0800",
     comments = "version: 1.6.3, compiler: javac, environment: Java 17.0.16 (BellSoft)"
 )
 @Component
@@ -23,6 +23,7 @@ public class ProStaffEmnumberToProStaffEmnumberVoMapperImpl implements ProStaffE
         proStaffEmnumberVo.setProStaffEmnumberId( arg0.getProStaffEmnumberId() );
         proStaffEmnumberVo.setIdCardNumber( arg0.getIdCardNumber() );
         proStaffEmnumberVo.setEmployeeNumber( arg0.getEmployeeNumber() );
+        proStaffEmnumberVo.setPhonenumber( arg0.getPhonenumber() );
 
         return proStaffEmnumberVo;
     }
@@ -36,6 +37,7 @@ public class ProStaffEmnumberToProStaffEmnumberVoMapperImpl implements ProStaffE
         arg1.setProStaffEmnumberId( arg0.getProStaffEmnumberId() );
         arg1.setIdCardNumber( arg0.getIdCardNumber() );
         arg1.setEmployeeNumber( arg0.getEmployeeNumber() );
+        arg1.setPhonenumber( arg0.getPhonenumber() );
 
         return arg1;
     }

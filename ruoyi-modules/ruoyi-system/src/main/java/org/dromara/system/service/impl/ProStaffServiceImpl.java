@@ -2,6 +2,7 @@ package org.dromara.system.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.BCrypt;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -186,6 +187,7 @@ public class ProStaffServiceImpl implements IProStaffService {
         return records;
     }
 
+
     private LambdaQueryWrapper<ProStaff> buildQueryWrapper(ProStaffBo bo) {
         Map<String, Object> params = bo.getParams();
         LambdaQueryWrapper<ProStaff> lqw = Wrappers.lambdaQuery();
@@ -216,6 +218,7 @@ public class ProStaffServiceImpl implements IProStaffService {
         lqw.eq(StringUtils.isNotBlank(bo.getExtensionNumber()), ProStaff::getExtensionNumber, bo.getExtensionNumber());
         lqw.eq(StringUtils.isNotBlank(bo.getOfficeLocation()), ProStaff::getOfficeLocation, bo.getOfficeLocation());
         lqw.eq(StringUtils.isNotBlank(bo.getIsFrozen()), ProStaff::getIsFrozen, bo.getIsFrozen());
+        lqw.eq(StringUtils.isNotBlank(bo.getLoginNumber()), ProStaff::getLoginNumber, bo.getLoginNumber());
         return lqw;
     }
 
@@ -269,6 +272,20 @@ public class ProStaffServiceImpl implements IProStaffService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public R<Void> updateByBo(ProStaffBo bo) {
+        // 0. 修改点：优先检查是否有离职日期，如果有，直接走离职逻辑
+        if (bo.getDimissionDate() != null) {
+            // 为了保证 resign 方法能找到人，如果 bo 中缺少身份证和手机号，需要先用 ID 查出来补全
+            if (StringUtils.isBlank(bo.getIdCardNumber()) && StringUtils.isBlank(bo.getPhonenumber())) {
+                ProStaff tempStaff = baseMapper.selectById(bo.getProStaffId());
+                if (tempStaff == null) {
+                    return R.fail("未找到对应的员工记录");
+                }
+                bo.setIdCardNumber(tempStaff.getIdCardNumber());
+                bo.setPhonenumber(tempStaff.getPhonenumber());
+            }
+            // 直接调用离职方法，不再执行后续的普通更新逻辑
+            return this.resign(bo);
+        }
         ProStaff proStaff = BeanUtil.copyProperties(bo, ProStaff.class);
         try {
             // 获取原始记录
@@ -278,6 +295,7 @@ public class ProStaffServiceImpl implements IProStaffService {
             }
             // 判断员工号是否发生变化
             boolean employeeNumberChanged = !Objects.equals(originalStaff.getEmployeeNumber(), bo.getEmployeeNumber());
+
             // 2、如果修改了员工号，需要检查唯一性并更新映射表
             if (employeeNumberChanged && StringUtils.isNotBlank(bo.getEmployeeNumber())) {
                 // 检查新员工号在pro_staff_emnumber中是否存在
@@ -288,50 +306,85 @@ public class ProStaffServiceImpl implements IProStaffService {
                 if (existingEmnumber != null) {
                     return R.fail(2001, "该员工号已存在");
                 }
-                // 更新pro_staff_emnumber表中身份证号和员工号对应的记录
+                // 获取手机号和身份证号
+                String phoneNumber = bo.getPhonenumber();
+                String idCardNumber = bo.getIdCardNumber();
+
+                // 校验：手机号和身份证号不能同时为空
+                if (StringUtils.isBlank(phoneNumber) && StringUtils.isBlank(idCardNumber)) {
+                    return R.fail(2001, "手机号和身份证号不能同时为空");
+                }
+                // 确定查询条件：先用手机号确定，为空再用身份证号
                 LambdaQueryWrapper<ProStaffEmnumber> emnumberQueryWrapper = new LambdaQueryWrapper<>();
-                emnumberQueryWrapper.eq(ProStaffEmnumber::getIdCardNumber, bo.getIdCardNumber());
-                ProStaffEmnumber existingIdCardRecord = proStaffEmnumberMapper.selectOne(emnumberQueryWrapper);
-                if (existingIdCardRecord != null) {
+                if (StringUtils.isNotBlank(phoneNumber)) {
+                    emnumberQueryWrapper.eq(ProStaffEmnumber::getPhonenumber, phoneNumber);
+                } else {
+                    emnumberQueryWrapper.eq(ProStaffEmnumber::getIdCardNumber, idCardNumber);
+                }
+
+                ProStaffEmnumber existingRecord = proStaffEmnumberMapper.selectOne(emnumberQueryWrapper);
+
+                if (existingRecord != null) {
                     // 更新已存在的记录
-                    existingIdCardRecord.setEmployeeNumber(bo.getEmployeeNumber());
-                    proStaffEmnumberMapper.updateById(existingIdCardRecord);
+                    existingRecord.setEmployeeNumber(bo.getEmployeeNumber());
+
+                    // 更新的时候也要加上手机号码（如果传入了手机号）
+                    if (StringUtils.isNotBlank(phoneNumber)) {
+                        existingRecord.setPhonenumber(phoneNumber);
+                    }
+                    // 建议同时也更新身份证号（如果传入了身份证号），保持数据最新
+                    if (StringUtils.isNotBlank(idCardNumber)) {
+                        existingRecord.setIdCardNumber(idCardNumber);
+                    }
+
+                    proStaffEmnumberMapper.updateById(existingRecord);
                 } else {
                     // 插入新记录
                     ProStaffEmnumber newEmnumber = new ProStaffEmnumber();
-                    newEmnumber.setIdCardNumber(bo.getIdCardNumber());
                     newEmnumber.setEmployeeNumber(bo.getEmployeeNumber());
+                    newEmnumber.setPhonenumber(phoneNumber);
+                    newEmnumber.setIdCardNumber(idCardNumber);
                     proStaffEmnumberMapper.insert(newEmnumber);
                 }
             }
             boolean deptIdChanged = !Objects.equals(originalStaff.getDeptId(), bo.getDeptId());
-            if (deptIdChanged && bo.getDeptId()!=null) {
+            if (deptIdChanged && bo.getDeptId() != null) {
                 SysDept dept = sysDeptMapper.selectById(bo.getDeptId());
                 if (dept != null) {
-                     // 假设部门对象中有getDeptNumber方法
+                    // 假设部门对象中有getDeptNumber方法
                     // 生成loginNumber，这里假设loginNumber的生成规则，您可以根据实际需求调整
-                   proStaff.setDeptNumber(dept.getDeptNumber());
-                   proStaff.setDeptLevel(sysDeptMapper.getLevelById(proStaff.getDeptId()));
+                    proStaff.setDeptNumber(dept.getDeptNumber());
+                    proStaff.setDeptLevel(sysDeptMapper.getLevelById(proStaff.getDeptId()));
                 } else {
                     return R.fail("未找到对应的部门信息");
                 }
             }
             // 3、更新pro_staff表
-            proStaff.setLoginNumber(proStaff.getDeptNumber()+proStaff.getEmployeeNumber());
+            // 注意：如果 loginNumber 依赖 DeptNumber 和 EmployeeNumber，确保这两个字段不为空
+            proStaff.setLoginNumber(proStaff.getDeptNumber() + proStaff.getEmployeeNumber());
             int update = baseMapper.updateById(proStaff);
-            //4、更新用户表
+            // 4、更新用户表
             SysUser sysUser = BeanUtil.copyProperties(proStaff, SysUser.class);
             sysUser.setUserName(proStaff.getLoginNumber());
-            sysUser.setUserId(sysUserMapper.selectOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUserName, bo.getLoginNumber())).getUserId());
-            sysUserMapper.updateById(sysUser);
-            if(proStaff.getIsSupervisor().equals("1"))userRoleMapper.update(new LambdaUpdateWrapper<SysUserRole>()
-                .set(SysUserRole::getRoleId,3L)
-                .eq(SysUserRole::getUserId, sysUser.getUserId()));
+
+            // 注意：这里原来的逻辑可能存在 NPE 风险或者逻辑漏洞，建议根据实际情况检查 bo.getLoginNumber() 是否准确
+            SysUser existingUser = sysUserMapper.selectOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUserName, bo.getLoginNumber()));
+            if (existingUser != null) {
+                sysUser.setUserId(existingUser.getUserId());
+                sysUserMapper.updateById(sysUser);
+
+                if ("1".equals(proStaff.getIsSupervisor())) {
+                    userRoleMapper.update(new LambdaUpdateWrapper<SysUserRole>()
+                        .set(SysUserRole::getRoleId, 3L)
+                        .eq(SysUserRole::getUserId, sysUser.getUserId()));
+                }
+            }
             if (update > 0) {
                 return R.ok();
             } else {
                 return R.fail("员工档案更新失败");
             }
+
         } catch (Exception e) {
             log.error("更新员工档案失败：", e);
             return R.fail("员工档案更新失败：" + e.getMessage());
@@ -347,9 +400,6 @@ public class ProStaffServiceImpl implements IProStaffService {
      * @return 是否删除成功
      */
     // 假设你需要先注入用户表的Mapper
-// @Autowired
-// private SysUserMapper sysUserMapper;
-
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean deleteWithValidByIds(Collection<Long> ids, Boolean isValid) {
@@ -362,88 +412,128 @@ public class ProStaffServiceImpl implements IProStaffService {
                 new LambdaQueryWrapper<ProStaff>()
                     .in(ProStaff::getProStaffId, ids)
             );
-
             if (proStaffList.isEmpty()) {
                 return false;
             }
-            // ==================== 处理身份证号逻辑 (原有的) ====================
-            // 2. 提取所有的身份证号码
+            // =================================================================
+            // 2. 处理手机号码逻辑 (新增：优先处理手机号)
+            // =================================================================
+            // 2.1 提取所有的手机号码
+            List<String> phoneNumbers = proStaffList.stream()
+                .map(ProStaff::getPhonenumber)
+                .filter(StringUtils::isNotBlank)
+                .distinct()
+                .collect(Collectors.toList());
+
+            // 2.2 批量查询这些手机号是否在其他记录中使用
+            if (!phoneNumbers.isEmpty()) {
+                // 查询所有使用这些手机号的记录（包括要删除的和保留的）
+                List<ProStaff> allRecordsWithSamePhone = baseMapper.selectList(
+                    new LambdaQueryWrapper<ProStaff>()
+                        .in(ProStaff::getPhonenumber, phoneNumbers)
+                        .select(ProStaff::getPhonenumber, ProStaff::getProStaffId)
+                );
+                // 按手机号分组，统计每个手机号对应的记录ID列表
+                Map<String, List<Long>> phoneToStaffIds = allRecordsWithSamePhone.stream()
+                    .collect(Collectors.groupingBy(
+                        ProStaff::getPhonenumber,
+                        Collectors.mapping(ProStaff::getProStaffId, Collectors.toList())
+                    ));
+                // 2.3 找出完全被删除的手机号
+                // 如果一个手机号对应的所有 ProStaffId 都在本次删除的 ids 集合中，说明该手机号不再被任何档案使用
+                List<String> phoneNumbersToDelete = phoneToStaffIds.entrySet().stream()
+                    .filter(entry -> ids.containsAll(entry.getValue()))
+                    .map(Map.Entry::getKey)
+                    .collect(Collectors.toList());
+                // 2.4 删除prostaffemnumber表中对应的行（根据手机号）
+                if (!phoneNumbersToDelete.isEmpty()) {
+                    int deletedCount = proStaffEmnumberMapper.delete(
+                        new LambdaQueryWrapper<ProStaffEmnumber>()
+                            .in(ProStaffEmnumber::getPhonenumber, phoneNumbersToDelete)
+                    );
+                    log.info("删除员工编码表记录(手机号关联) {} 条，手机号: {}", deletedCount, phoneNumbersToDelete);
+                }
+            }
+            // =================================================================
+            // 3. 处理身份证号逻辑 (原有逻辑)
+            // =================================================================
+            // 3.1 提取所有的身份证号码
             List<String> idCardNumbers = proStaffList.stream()
                 .map(ProStaff::getIdCardNumber)
                 .filter(StringUtils::isNotBlank)
                 .distinct()
                 .collect(Collectors.toList());
-            // 3. 批量查询这些身份证号是否在其他记录中使用
+            // 3.2 批量查询这些身份证号是否在其他记录中使用
             if (!idCardNumbers.isEmpty()) {
-                // 查询所有使用这些身份证号的记录（包括要删除的和保留的）
+                // 查询所有使用这些身份证号的记录
                 List<ProStaff> allRecordsWithSameIdCard = baseMapper.selectList(
                     new LambdaQueryWrapper<ProStaff>()
                         .in(ProStaff::getIdCardNumber, idCardNumbers)
                         .select(ProStaff::getIdCardNumber, ProStaff::getProStaffId)
                 );
-                // 按身份证号分组，统计每个身份证号对应的记录ID
+                // 按身份证号分组
                 Map<String, List<Long>> idCardToStaffIds = allRecordsWithSameIdCard.stream()
                     .collect(Collectors.groupingBy(
                         ProStaff::getIdCardNumber,
                         Collectors.mapping(ProStaff::getProStaffId, Collectors.toList())
                     ));
-                // 找出需要删除的身份证号（即所有使用该身份证号的记录都在要删除的ids中）
+                // 3.3 找出需要删除的身份证号
                 List<String> idCardNumbersToDelete = idCardToStaffIds.entrySet().stream()
-                    .filter(entry -> ids.containsAll(entry.getValue())) // 关键判断：所有关联ID都在删除列表中
+                    .filter(entry -> ids.containsAll(entry.getValue()))
                     .map(Map.Entry::getKey)
                     .collect(Collectors.toList());
-                // 4. 删除prostaffemnumber表中对应的行
+                // 3.4 删除prostaffemnumber表中对应的行（根据身份证号）
                 if (!idCardNumbersToDelete.isEmpty()) {
                     int deletedCount = proStaffEmnumberMapper.delete(
                         new LambdaQueryWrapper<ProStaffEmnumber>()
                             .in(ProStaffEmnumber::getIdCardNumber, idCardNumbersToDelete)
                     );
-                    log.info("删除员工编码表记录 {} 条，身份证号: {}", deletedCount, idCardNumbersToDelete);
+                    log.info("删除员工编码表记录(身份证关联) {} 条，身份证号: {}", deletedCount, idCardNumbersToDelete);
                 }
             }
-            // ==================== 新增：处理 LoginNumber (用户账号) 逻辑 ====================
-            // A. 提取所有的 LoginNumber
+            // =================================================================
+            // 4. 处理 LoginNumber (用户账号) 逻辑 (原有逻辑)
+            // =================================================================
+            // 4.1 提取所有的 LoginNumber
             List<String> loginNumbers = proStaffList.stream()
-                .map(ProStaff::getLoginNumber) // 假设ProStaff类中有 getLoginNumber 方法
+                .map(ProStaff::getLoginNumber)
                 .filter(StringUtils::isNotBlank)
                 .distinct()
                 .collect(Collectors.toList());
-            // B. 批量查询这些账号是否在其他档案记录中使用
+            // 4.2 批量查询这些账号是否在其他档案记录中使用
             if (!loginNumbers.isEmpty()) {
-                // B1. 查询所有使用这些LoginNumber的档案记录（只查LoginNumber和ID即可）
+                // 查询所有使用这些LoginNumber的档案记录
                 List<ProStaff> allRecordsWithSameLoginNum = baseMapper.selectList(
                     new LambdaQueryWrapper<ProStaff>()
                         .in(ProStaff::getLoginNumber, loginNumbers)
                         .select(ProStaff::getLoginNumber, ProStaff::getProStaffId)
                 );
-                // B2. 按 LoginNumber 分组，统计每个账号对应的档案ID列表
+                // 按 LoginNumber 分组
                 Map<String, List<Long>> loginNumToStaffIds = allRecordsWithSameLoginNum.stream()
                     .collect(Collectors.groupingBy(
                         ProStaff::getLoginNumber,
                         Collectors.mapping(ProStaff::getProStaffId, Collectors.toList())
                     ));
-                // B3. 找出完全被删除的 LoginNumber
-                // 如果一个 LoginNumber 对应的所有 ProStaffId 都在本次删除的 ids 集合中，说明该账号不再被任何档案使用
+                // 4.3 找出完全被删除的 LoginNumber
                 List<String> usersToDelete = loginNumToStaffIds.entrySet().stream()
                     .filter(entry -> ids.containsAll(entry.getValue()))
                     .map(Map.Entry::getKey)
                     .collect(Collectors.toList());
-                // C. 删除用户表 (SysUser) 中对应的行
+                // 4.4 删除用户表 (SysUser) 中对应的行
                 if (!usersToDelete.isEmpty()) {
-                    // 注意：请根据你实际的User实体类和Mapper名称修改下面的代码
                     int userDeletedCount = sysUserMapper.delete(
                         new LambdaQueryWrapper<SysUser>()
-                            .in(SysUser::getUserName, usersToDelete) // 假设用户表账号字段为 UserName
+                            .in(SysUser::getUserName, usersToDelete)
                     );
                     log.info("关联删除系统用户记录 {} 条，账号: {}", userDeletedCount, usersToDelete);
                 }
             }
-            // ==================== 新增结束 ====================
-            // 5. 删除ProStaff记录
+            // =================================================================
+            // 5. 删除ProStaff主表记录
+            // =================================================================
             int mainDeletedCount = baseMapper.deleteByIds(ids);
             log.info("删除员工档案记录 {} 条", mainDeletedCount);
             return mainDeletedCount > 0;
-
         } catch (Exception e) {
             log.error("删除员工档案失败，ids: {}", ids, e);
             throw new ServiceException("删除员工档案失败");
@@ -559,23 +649,45 @@ public class ProStaffServiceImpl implements IProStaffService {
      *
      */
     private void getNumber(ProStaff proStaff) {
-        //3.1、查询员工号码表是否存在该员工，有则直接使用
-        ProStaffEmnumber proStaffEmnumber = proStaffEmnumberMapper.selectOne(new LambdaQueryWrapper<ProStaffEmnumber>()
-            .eq(ProStaffEmnumber::getIdCardNumber, proStaff.getIdCardNumber())
-        );
-        if(proStaffEmnumber!=null){
-            proStaff.setEmployeeNumber(proStaffEmnumber.getEmployeeNumber());}
-        //3.2、没有，则新建员工号码，并插入员工号码表
-        else{
-            String emNumber=createNum();
-            proStaff.setEmployeeNumber(emNumber);
-            proStaffEmnumberMapper.insert(BeanUtil.copyProperties(proStaff,ProStaffEmnumber.class));
+        // 获取手机号和身份证号
+        String phoneNumber = proStaff.getPhonenumber();
+        String idCardNumber = proStaff.getIdCardNumber();
+        // 0. 前置校验：两者不能同时为空
+        if (StringUtils.isBlank(phoneNumber) && StringUtils.isBlank(idCardNumber)) {
+            throw new ServiceException("手机号和身份证号不能同时为空，无法获取工号");
         }
-        //4.1、设置员工部门号
+        // 3.1、查询员工号码表是否存在该员工
+        // 逻辑修改：优先用手机号确定，为空再用身份证号
+        LambdaQueryWrapper<ProStaffEmnumber> queryWrapper = new LambdaQueryWrapper<>();
+        if (StringUtils.isNotBlank(phoneNumber)) {
+            queryWrapper.eq(ProStaffEmnumber::getPhonenumber, phoneNumber);
+        } else {
+            queryWrapper.eq(ProStaffEmnumber::getIdCardNumber, idCardNumber);
+        }
+        ProStaffEmnumber proStaffEmnumber = proStaffEmnumberMapper.selectOne(queryWrapper);
+        if (proStaffEmnumber != null) {
+            // 存在：直接复用原有的工号
+            proStaff.setEmployeeNumber(proStaffEmnumber.getEmployeeNumber());
+        } else {
+            // 3.2、没有，则新建工号，并插入员工号码表
+            String emNumber = createNum();
+            proStaff.setEmployeeNumber(emNumber);
+            // 构建插入对象
+            ProStaffEmnumber newRecord = new ProStaffEmnumber();
+            newRecord.setEmployeeNumber(emNumber);
+            // 确保手机号和身份证号都被保存（如果有值的话）
+            newRecord.setPhonenumber(phoneNumber);
+            newRecord.setIdCardNumber(idCardNumber);
+            // 如果 ProStaffEmnumber 还有其他字段需要从 proStaff 复制，可以使用 BeanUtil，
+            // 但为了确保 phone 和 idCard 准确写入，上面手动 set 是最稳妥的。
+            // BeanUtil.copyProperties(proStaff, newRecord);
+            proStaffEmnumberMapper.insert(newRecord);
+        }
+        // 4.1、设置员工部门号
         proStaff.setDeptNumber(sysDeptMapper.selectNumById(proStaff.getDeptId()));
-        //5.1、设置员工登录号
-        proStaff.setLoginNumber(proStaff.getDeptNumber()+proStaff.getEmployeeNumber());
-        //6.3、设置员工部门等级
+        // 5.1、设置员工登录号
+        proStaff.setLoginNumber(proStaff.getDeptNumber() + proStaff.getEmployeeNumber());
+        // 6.3、设置员工部门等级
         proStaff.setDeptLevel(sysDeptMapper.getLevelById(proStaff.getDeptId()));
     }
 
@@ -633,22 +745,33 @@ public class ProStaffServiceImpl implements IProStaffService {
     }
 
     // 需要在类中注入用户表的Mapper
-// @Autowired
-// private SysUserMapper sysUserMapper;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public R<Void> resign(ProStaffBo bo) {
         try {
-            // 1. 构造查询条件
+            // 1. 获取参数并校验
+            String phoneNumber = bo.getPhonenumber(); // 注意核对你实体类中的getter名称
+            String idCardNumber = bo.getIdCardNumber();
+
+            if (StringUtils.isBlank(phoneNumber) && StringUtils.isBlank(idCardNumber)) {
+                return R.fail("办理离职失败：手机号和身份证号不能同时为空");
+            }
+            // 2. 构造动态查询条件 (修改点：优先使用手机号确定一个人，为空再用身份证号)
             LambdaQueryWrapper<ProStaff> queryWrapper = new LambdaQueryWrapper<>();
-            queryWrapper.eq(ProStaff::getIdCardNumber, bo.getIdCardNumber());
+            if (StringUtils.isNotBlank(phoneNumber)) {
+                // 优先级 1：手机号
+                queryWrapper.eq(ProStaff::getPhonenumber, phoneNumber);
+            } else {
+                // 优先级 2：身份证号 (前面的校验保证了此处身份证号一定不为空)
+                queryWrapper.eq(ProStaff::getIdCardNumber, idCardNumber);
+            }
             // ==================== 新增逻辑开始 ====================
             // A. 在更新前，先查出这些记录对应的 LoginNumber
+            // 直接复用上面构建好的 queryWrapper，确保查询范围和更新范围一致
             List<ProStaff> staffList = baseMapper.selectList(
-                new LambdaQueryWrapper<ProStaff>()
-                    .eq(ProStaff::getIdCardNumber, bo.getIdCardNumber())
-                    .select(ProStaff::getLoginNumber) // 只需查LoginNumber字段
+                queryWrapper.clone() // 克隆一个wrapper以防后续操作影响（虽然此处selectList不会修改wrapper，但为了安全）
+                    .select(ProStaff::getLoginNumber)
             );
             // B. 提取非空的 LoginNumber 列表
             List<String> loginNumbers = staffList.stream()
@@ -657,19 +780,20 @@ public class ProStaffServiceImpl implements IProStaffService {
                 .distinct()
                 .collect(Collectors.toList());
             // ==================== 新增逻辑结束（准备阶段） ====================
-            // 2. 原有逻辑：更新 ProStaff 表
+            // 3. 原有逻辑：更新 ProStaff 表
             ProStaff updateStaff = new ProStaff();
             updateStaff.setDimissionDate(bo.getDimissionDate()); // 设置离职日期
             updateStaff.setIsFrozen("1"); // 冻结状态
-            updateStaff.setStatus("1"); // 离职状态
+            updateStaff.setStatus("1");   // 离职状态
+            // 使用同一个 queryWrapper 执行更新
             int updateCount = baseMapper.update(updateStaff, queryWrapper);
             if (updateCount > 0) {
                 // ==================== 新增逻辑开始 ====================
                 // C. 如果存在关联的 LoginNumber，更新 User 表状态
                 if (!loginNumbers.isEmpty()) {
-                    // 创建用于更新的 User 实体 (假设实体类为 SysUser)
+                    // 创建用于更新的 User 实体
                     SysUser updateUser = new SysUser();
-                    updateUser.setStatus("1"); // 设置状态为1
+                    updateUser.setStatus("1"); // 设置状态为1 (假设1代表冻结/禁用)
                     // 执行批量更新
                     sysUserMapper.update(updateUser,
                         new LambdaQueryWrapper<SysUser>()
@@ -684,14 +808,12 @@ public class ProStaffServiceImpl implements IProStaffService {
             }
         } catch (Exception e) {
             log.error("设置员工离职失败：", e);
-            throw new ServiceException("设置员工离职失败：" + e.getMessage()); // 建议抛出异常以触发事务回滚
+            throw new ServiceException("设置员工离职失败：" + e.getMessage());
         }
     }
 
 
     // 记得注入 SysUserMapper
-// @Autowired
-// private SysUserMapper sysUserMapper;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -779,5 +901,41 @@ public class ProStaffServiceImpl implements IProStaffService {
             // 只取第一条
             .last("LIMIT 1");
         return baseMapper.selectOne(queryWrapper);
+    }
+
+    /**
+     * 根据 身份证 或 手机号 + 部门ID 查询员工
+     * 核心逻辑：优先返回状态正常（is_frozen=0）的记录
+     */
+    @Override
+    public ProStaff queryPrioritizingActive(String idCard, Long deptId, String phone) {
+        // 1. 构建查询条件 (假设你使用的是 MyBatis-Plus，如果不是请参考逻辑修改 SQL)
+        LambdaQueryWrapper<ProStaff> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(ProStaff::getDeptId, deptId);
+
+        // 关键：(身份证 = ? OR 手机号 = ?)
+        wrapper.and(w -> {
+            if (ObjectUtil.isNotEmpty(idCard)) {
+                w.eq(ProStaff::getIdCardNumber, idCard);
+            }
+            if (ObjectUtil.isNotEmpty(phone)) {
+                w.or().eq(ProStaff::getPhonenumber, phone);
+            }
+        });
+
+        // 2. 查询出所有符合条件的记录（包含正常和冻结的）
+        List<ProStaff> list =baseMapper.selectList(wrapper); // 或者 this.baseMapper.selectList(wrapper);
+
+        if (CollUtil.isEmpty(list)) {
+            return null;
+        }
+
+        // 3. 内存过滤：优先找未冻结的("0")
+        // 如果找到了未冻结的，直接返回该记录（此时冻结的那条就被忽略了）
+        // 如果没找到未冻结的，返回列表里的第一条（也就是冻结的那条）
+        return list.stream()
+            .filter(staff -> "0".equals(staff.getIsFrozen()))
+            .findFirst()
+            .orElse(list.get(0));
     }
 }

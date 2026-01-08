@@ -41,6 +41,11 @@ public class SysDept extends TenantEntity {
     private String deptNumber;
 
     /**
+     * 部门类型
+     */
+    private String category;
+
+    /**
      * 父部门ID
      */
     private Long parentId;

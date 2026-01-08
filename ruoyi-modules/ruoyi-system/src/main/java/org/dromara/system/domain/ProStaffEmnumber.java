@@ -31,4 +31,6 @@ public class ProStaffEmnumber extends TenantEntity {
      */
     private String employeeNumber;
 
+    private String phonenumber;
+
 }

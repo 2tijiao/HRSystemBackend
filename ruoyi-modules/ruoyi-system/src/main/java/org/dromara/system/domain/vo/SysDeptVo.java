@@ -61,6 +61,12 @@ public class SysDeptVo implements Serializable {
     private String deptName;
 
     /**
+     * 部门类型
+     */
+    @ExcelProperty(value = "部门类型")
+    private String category;
+
+    /**
      * 部门类别编码
      */
     @ExcelProperty(value = "部门类别编码")
@@ -74,7 +80,7 @@ public class SysDeptVo implements Serializable {
     /**
      * 负责人ID
      */
-    private Long leader;
+    private String leader;
 
     /**
      * 负责人

@@ -4,7 +4,11 @@
     <file url="file://$PROJECT_DIR$/script/sql/postgres/postgres_ry_job.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/script/sql/postgres/postgres_ry_vue_5.X.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/script/sql/postgres/postgres_ry_workflow.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/script/sql/ry_vue_5.X.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/script/sql/ry_job.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/script/sql/ry_vue_5.X.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/script/sql/ry_workflow.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/script/sql/sqlserver/sqlserver_ry_vue_5.X.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/../RuoYiSql/000-mxk_organizations.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/../RuoYiSql/001-mxk_userinfo.sql" dialect="PostgreSQL" />
   </component>
 </project>

@@ -35,4 +35,7 @@ public class ProStaffEmnumberVo implements Serializable {
     @ExcelProperty("员工号码")
     private String employeeNumber;
 
+    @ExcelProperty("员工手机号码")
+    private String phonenumber;
+
 }

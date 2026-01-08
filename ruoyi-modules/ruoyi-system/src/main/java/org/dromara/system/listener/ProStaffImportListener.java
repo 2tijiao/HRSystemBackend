@@ -56,97 +56,102 @@ public class ProStaffImportListener extends AnalysisEventListener<ProStaffVo> im
     @Override
     public void invoke(ProStaffVo staffVo, AnalysisContext context) {
         try {
-            // ------------------ 修改开始 ------------------
-            // 1. 部门号依然是必须的
+            // ------------------ 基础校验开始 ------------------
             if (ObjectUtil.isEmpty(staffVo.getDeptNumber())) {
                 throw new ServiceException("部门号不能为空");
             }
-
-            // 2. 修改逻辑：如果身份证号为空，则必须提供手机号码来确定一个人
+            // 当身份证号为空时，手机号码不能为空
             if (ObjectUtil.isEmpty(staffVo.getIdCardNumber()) && ObjectUtil.isEmpty(staffVo.getPhonenumber())) {
                 throw new ServiceException("当身份证号为空时，手机号码不能为空");
             }
-            // ------------------ 修改结束 ------------------
+            // ------------------ 基础校验结束 ------------------
 
+            // 1. 补全ID信息
             staffVo.setDeptId(this.staffService.getDeptIdByDeptNumber(staffVo.getDeptNumber()));
-            staffVo.setPostId(this.staffService.getPostIdByDeptIdAndPostName(staffVo.getDeptId(),staffVo.getPostName()));
+            staffVo.setPostId(this.staffService.getPostIdByDeptIdAndPostName(staffVo.getDeptId(), staffVo.getPostName()));
 
-            // 根据身份证号和部门ID查询已存在的员工档案
-            // 注意：此处传入的 IdCardNumber 可能为空，Service层需支持根据手机号+部门ID查询的逻辑
-            ProStaff existingStaff = this.staffService.queryByPhoneNumAndDeptId(
+            // ------------------ 核心修改点开始 ------------------
+
+            // 2. 调用新方法：优先查询正常的记录
+            // 只有当该员工在库里全是冻结记录时，这里才会返回冻结对象
+            // 如果有一条正常、一条冻结，这里返回的一定是正常对象
+            ProStaff existingStaff = this.staffService.queryPrioritizingActive(
                 staffVo.getIdCardNumber(),
                 staffVo.getDeptId(),
                 staffVo.getPhonenumber()
             );
 
-            // 判断员工档案是否存在且是否为有效状态（非冻结状态）
+            // 3. 判断状态
             boolean isStaffExistAndActive = false;
+
             if (ObjectUtil.isNotNull(existingStaff)) {
-                // 检查员工是否为冻结状态，"1"表示冻结
+                // 检查获取到的记录状态
                 if ("1".equals(existingStaff.getIsFrozen())) {
-                    // 员工存在但处于冻结状态，视为不存在，可以重新导入
-                    log.info("员工 {} 身份证号 {} 在部门 {} 中处于冻结状态，将作为新记录处理",
-                        existingStaff.getName(), existingStaff.getIdCardNumber(), existingStaff.getDeptId());
-                    existingStaff = null; // 设置为null，后续按新增处理
+                    // 能够进入这里，说明 Service 层没找到“正常记录”
+                    // 此时确实只有冻结记录 -> 视为不存在，准备重新导入(新增)
+                    log.info("员工 {} 在部门 {} 中仅存在冻结状态记录，将作为新记录处理",
+                        existingStaff.getName(), existingStaff.getDeptId());
+                    existingStaff = null; // 置空，后续走新增逻辑
                 } else {
-                    // 员工存在且未冻结，视为有效存在
+                    // 取到的是正常记录 (即使库里还有一条冻结的，也被Service层过滤掉了)
                     isStaffExistAndActive = true;
                 }
             }
 
-            if (ObjectUtil.isNull(existingStaff) || !isStaffExistAndActive) {
-                // 员工不存在或处于冻结状态，执行新增操作
+            // ------------------ 核心修改点结束 ------------------
+
+            // 4. 分支处理：新增 OR 更新
+            if (ObjectUtil.isNull(existingStaff)) {
+                // --- 场景：完全的新人，或者旧账号已冻结被视为新人 ---
                 ProStaffBo staff = BeanUtil.toBean(staffVo, ProStaffBo.class);
-                // 验证数据格式和规则
-                ValidatorUtils.validate(staff);
-                // 设置创建者ID
-                staff.setCreateBy(operUserId);
-                // 新增时默认设置为未冻结状态（根据业务需求调整）
-                staff.setIsFrozen("0");
-                // 调用服务层插入数据
-                staffService.saveByBo(staff);
-                successNum++;
-                // 记录成功信息
-                successMsg.append("<br/>").append(successNum).append("、员工 ").append(staff.getName())
-                    .append("(").append(staff.getEmployeeNumber()).append(") 导入成功");
-            } else if (isUpdateSupport) {
-                // 员工存在且支持更新，执行更新操作
-                Long staffId = existingStaff.getProStaffId();
-                ProStaffBo staff = BeanUtil.toBean(staffVo, ProStaffBo.class);
-                // 设置要更新的记录ID
-                staff.setProStaffId(staffId);
-                // 验证数据格式和规则
                 ValidatorUtils.validate(staff);
 
-                // 设置更新者ID
-                staff.setUpdateBy(operUserId);
-                // 调用服务层更新数据
-                staffService.updateByBo(staff);
+                staff.setCreateBy(operUserId);
+                staff.setIsFrozen("0"); // 新增时强制为正常状态
+
+                staffService.saveByBo(staff);
+
                 successNum++;
-                // 记录成功信息
+                successMsg.append("<br/>").append(successNum).append("、员工 ").append(staff.getName())
+                    .append("(").append(staff.getEmployeeNumber()).append(") 导入成功");
+
+            } else if (isUpdateSupport) {
+                // --- 场景：存在正常账号，且允许更新 ---
+                // 此时 existingStaff 就是那条正常的记录，不会误更新冻结的那条
+                Long staffId = existingStaff.getProStaffId();
+                ProStaffBo staff = BeanUtil.toBean(staffVo, ProStaffBo.class);
+
+                staff.setProStaffId(staffId); // 锁定更新正常的那条ID
+                ValidatorUtils.validate(staff);
+                staff.setUpdateBy(operUserId);
+
+                staffService.updateByBo(staff);
+
+                successNum++;
                 successMsg.append("<br/>").append(successNum).append("、员工 ").append(staff.getName())
                     .append("(").append(staff.getEmployeeNumber()).append(") 更新成功");
+
             } else {
-                // 员工已存在且不支持更新，记录失败信息
+                // --- 场景：存在正常账号，但不支持更新 ---
                 failureNum++;
                 failureMsg.append("<br/>").append(failureNum).append("、员工 ")
                     .append(existingStaff.getName()).append("(").append(existingStaff.getEmployeeNumber())
                     .append(") 已存在且未冻结");
             }
+
         } catch (Exception e) {
-            // 处理导入过程中出现的异常
+            // 异常处理逻辑
             failureNum++;
-            // 构建员工标识信息，用于错误提示
             String employeeInfo = ObjectUtil.isNotEmpty(staffVo.getEmployeeNumber()) ?
                 staffVo.getName() + "(" + staffVo.getEmployeeNumber() + ")" : staffVo.getName();
-            // 清理HTML标签防止XSS攻击
+
             String msg = "<br/>" + failureNum + "、员工 " + HtmlUtil.cleanHtmlTag(employeeInfo) + " 导入失败：";
             String message = e.getMessage();
-            // 处理数据验证异常，提取具体的验证错误信息
+
             if (e instanceof ConstraintViolationException cvException) {
                 message = StreamUtils.join(cvException.getConstraintViolations(), ConstraintViolation::getMessage, ", ");
             }
-            // 记录错误信息
+
             failureMsg.append(msg).append(message);
             log.error(msg, e);
         }
